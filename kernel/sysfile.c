@@ -503,22 +503,3 @@ sys_pipe(void)
   }
   return 0;
 }
-uint64 
-  sys_sem_close (void){
-
-}
-
-uint64 
-  sys_sem_open (void){
-
-}
-
-uint64 
-  sys_sem_up (void){
-
-}
-
-uint64 
-  sys_sem_down (void){
-
-}

@@ -185,5 +185,10 @@ void            virtio_disk_init(void);
 void            virtio_disk_rw(struct buf *, int);
 void            virtio_disk_intr(void);
 
+//semaphores.c
+int             sem_open(int sem, int value);
+int             sem_close(int sem);
+int             sem_up(int sem);
+int             sem_down(int sem);
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x)/sizeof((x)[0]))
