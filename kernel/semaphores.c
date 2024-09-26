@@ -73,15 +73,16 @@ sem_down(int sem){
         semaphores[sem].value--;
 
 
-    }
-    if else(value === 0){
-        
-        sleep(&semaphores[sem], &(semaphores[sem].lock));
-
-    }
-    if else(value < 0){
+    }else if(value < 0){
         printf("Semaforo no inicializado");
+        release(&(semaphores[sem].lock));
+        return 0;
 
+    }  
+    while (value == 0) {
+        sleep(&semaphores[sem], &(semaphores[sem].lock));
     }
+  
+
     release(&(semaphores[sem].lock));
 }
