@@ -124,16 +124,21 @@ int sem_down(int sem)
 {
     int value = semaphores[sem].value;
     acquire(&(semaphores[sem].lock));
+    int res;
     if (value > 0)
     {
         semaphores[sem].value--;
+        res =1;
     }
-    else if (value < 0)
+    else if( value == -1)
     {
-
-        release(&(semaphores[sem].lock));
-
-        return 0; // Semaforo no inicializado
+        res= 0; // Semaforo no inicializado
+    }
+    else if( value == 0){
+        res = 0; //intenta decrementar un semaforo que no tiene valor para decrementar
+    }
+    else{ 
+        res =0; //Valor inesperado
     }
     while (value == 0)
     {
@@ -141,5 +146,5 @@ int sem_down(int sem)
     }
 
     release(&(semaphores[sem].lock));
-    return 1;
+    return res;
 }
