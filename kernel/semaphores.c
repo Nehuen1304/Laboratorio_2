@@ -85,4 +85,5 @@ sem_down(int sem){
   
 
     release(&(semaphores[sem].lock));
+    return 1;
 }
