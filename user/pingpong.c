@@ -1,14 +1,7 @@
 #include "kernel/types.h"
 #include "kernel/stat.h"
 #include "user/user.h"
-#include <stdarg.h>
-#include "kernel/param.h"
-#include "kernel/fs.h"
-#include "kernel/fcntl.h"
-#include "kernel/syscall.h"
-#include "kernel/memlayout.h"
-#include "kernel/riscv.h"
-// #include <stdlib.h>
+
 
 
 
@@ -17,39 +10,43 @@ int main(int argc, char *argv[]) {
     int valid_args_count = (argc == 2);	
 
     if (!valid_args_count) {
-        printf("Cantidad invalida de argumentos\n");
+        printf("ERROR: Cantidad invalida de argumentos\n");
         exit(0);
     }   
 int ciclillo = atoi(argv[1]);
-if(ciclillo<1){
-    printf("Cantidad invalida de ping pongs\n");
-    exit(0);
-}
+    if (ciclillo  <= 0){
+      printf("ERROR: Se necesita un argumento >= 0 para el numero de rondas.\n");
+      return 0;
+    }
 
-sem_open(0, 1);
-sem_open(1,0);
+int ping_sem = get_channel_sem();
+int pong_sem = get_channel_sem();
+sem_open(ping_sem, 1);
+sem_open(pong_sem,1);
+sem_down(pong_sem);
 int rc = fork();
     if(rc<0){
         printf("Error en el fork\n");
         exit(0);
     }
-    while(ciclillo--){
+    // while(ciclillo--){
     if(rc==0){ //Hijijto
-        sem_down(0);
+    for (int i = 0; i < ciclillo; i++) {
+        sem_down(ping_sem); 
         printf("Ping\n");
-        sem_up(1);
+        sem_up(pong_sem); 
+    }
+    sem_down(ping_sem);
     }
     else {  //Padresillo
-        sem_down(0);
-        printf("    Pong\n");
-        sem_up(0);
-        
+    for (int i = 0; i < ciclillo; i++) {
+        sem_down(pong_sem); 
+        printf("\tPong\n");
+        sem_up(ping_sem); 
     }
     }
-     if (rc == 0) {  // Proceso hijo
-        sem_close(0);  // Cerrar el semáforo de Ping
-    } else {  // Proceso padre
-        sem_close(1);  // Cerrar el semáforo de Pong
-    }
+  sem_close(ping_sem);
+  sem_close(pong_sem);
+
 return 0;
 }

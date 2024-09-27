@@ -190,5 +190,6 @@ int             sem_open(int sem, int value);
 int             sem_close(int sem);
 int             sem_up(int sem);
 int             sem_down(int sem);
+int             get_channel_sem(void);
 // number of elements in fixed-size array
 #define NELEM(x) (sizeof(x)/sizeof((x)[0]))

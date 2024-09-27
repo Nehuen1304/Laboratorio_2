@@ -122,3 +122,8 @@ sys_sem_down(void)
   argint(0, &sem);
   return (uint64)sem_down(sem);
 }
+
+uint64
+sys_get_channel_sem(void)
+{
+ return (uint64)get_channel_sem();}

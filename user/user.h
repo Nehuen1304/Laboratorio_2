@@ -26,6 +26,7 @@ int sem_open(int sem, int value);
 int sem_close(int sem);
 int sem_up(int sem);
 int sem_down(int sem);
+int get_channel_sem(void);
 // ulib.c
 int stat(const char*, struct stat*);
 char* strcpy(char*, const char*);
