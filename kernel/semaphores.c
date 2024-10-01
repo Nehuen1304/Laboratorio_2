@@ -72,7 +72,11 @@ sem_open(int sem, int value)
 
     acquire(&(semaphores[sem].lock));
 
-
+    if (value < 0) 
+    {
+        printf("Error: valor inicial invalido\n");
+        return 0;
+    }
 
     int res;
         // solo inicializa si el semáforo no ha sido usado aún
@@ -90,9 +94,16 @@ int
 sem_close(int sem)
 {
 
+    if (sem >= MAX_SEMAPHORES || sem < 0)
+    {
+        printf("ERROR: sem ID invalido\n");
+        return 0; // Indicando error
+    }
+
     int value = semaphores[sem].value;
     int res;
     acquire(&(semaphores[sem].lock));
+
     if (value == -1)
     {
         res = 0; // el semaforo no ha sido inicializado
@@ -103,9 +114,9 @@ sem_close(int sem)
     }
     else
     {
-  //      wakeup(&semaphores[sem]);
         semaphores[sem].value = -1;
         semaphores[sem].init_value = 0;
+        semaphores[sem].active = 0;
         res = 1;
     }
 
@@ -117,20 +128,27 @@ sem_close(int sem)
 int
 sem_up(int sem)
 {
+
+    if (sem >= MAX_SEMAPHORES || sem < 0)
+    {
+        printf("ERROR: sem ID invalido\n");
+        return 0; // Indicando error
+    }
+
+    if (semaphores[sem].active == 0) {
+        printf("ERROR: semáforo cerrado\n");
+        return 0; // Error: semáforo cerrado
+    }
+
     int res=0;
     int value = semaphores[sem].value;
     acquire(&(semaphores[sem].lock));
+
     if (value >= semaphores[sem].init_value)
     {
     printf("ERROR: inrementa indebidamente\n");
     res = 0; // ERROR, intenta habilitar más procesos que los inicializados por el semaforo
     }
-    // else if (value > 0)
-    // {
-    //     semaphores[sem].value++;
-    //     res = 1;
-    // }
-  // este caso pisa al de abajo
     else if (value == -1)
     {
         printf("ERROR: semaforo no init\n");    
@@ -150,7 +168,21 @@ sem_up(int sem)
 
 int
 sem_down(int sem) {
+
+    if (sem >= MAX_SEMAPHORES || sem < 0)
+    {
+        printf("ERROR: sem ID invalido\n");
+        return 0; // Indicando error
+    }
+
+    if (semaphores[sem].active == 0) 
+    {
+        printf("ERROR: semáforo cerrado\n");
+        return 0; // Error: semáforo cerrado
+    }
+
     acquire(&(semaphores[sem].lock));
+
     while (semaphores[sem].value == 0) {
         sleep(&semaphores[sem], &(semaphores[sem].lock));  // duerme hasta que haya un valor
     }
