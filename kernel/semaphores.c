@@ -45,11 +45,12 @@ get_channel_sem(void)
         
     }
     if (semaphores[i].active == 0){
-
-      sem_open(i,0);
+     
       semaphores[i].active = 1;
       index = i;
-      found_index = 1;
+      found_index = 1;       
+      sem_open(i,0);
+      
     }
   }
  if(found_index){
@@ -63,7 +64,10 @@ get_channel_sem(void)
 int
 sem_open(int sem, int value)
 {
-
+    if(semaphores[sem].active==0){
+        printf("Error, solicito leer el Readme y ver el uso correcto de sem_open\n");
+        return 0;
+    }
     if (sem >= MAX_SEMAPHORES || sem < 0)
     {
         printf("Error: sem ID invalido\n");
@@ -154,11 +158,15 @@ sem_up(int sem)
         printf("ERROR: semaforo no init\n");    
         res = 0; // Error semaforo no inicializado
     }
-    else if (value >= 0)
+    else if (value == 0)
     {
         semaphores[sem].value++;
         wakeup(&semaphores[sem]); // Se rehabilita el semaforo
         res = 1;
+    }
+    else if(value>0){
+        semaphores[sem].value++;
+         res = 1;
     }
 
     release(&(semaphores[sem].lock));

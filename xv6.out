@@ -6,67 +6,67 @@ hart 2 starting
 init: starting sh
 $ pingpong 10 & ; pingpong 10 & ; pingpong 20 ; echo DONE
 Ping
-	PoPng
-ing
+	Pong
 Ping
-	P	Pong
-PoPng
-ingPingin
+	Pong
+Ping
+	PonPgiPnin
 g
+Pgin
+g	
+Pong
+	PPi	oPonngg
 
-		PPoonng
-Pingg
-
-	Pong
-PPing
-	Pong
-	Pong
-Ping
-Pinging
-	
-	Pong
-Ping
-	Pong
-Ping
-P	Pong
-	onPing
+PiPngi
+n	nPgon
 g
-	PonPing
-g	Pong
+	PPoinngg
+
+Pi	nPgo
+n	gP
+onPgi
+ng
 Ping
-	Pong
+	gP
+on	Pogn
+g
+	PoPinngg
 Pi
-PPong
+n	PoPngi
 ng
-	Poningg
-Ping
-	Po
+g
+P	ing
+	PPoonng
+g
+	PPonign
+Pign
+g	
+PPion	ngg
+
+	PPoingn
+g
+PPing	
+Ponog
 ng
-PinPig
-	Pong
-	Pong
-Ping
-	Pong	Pong
-Ping
-	Pong
-Pin
-Ping
-	Pong
-Pg
-ing
-	Pong
-	Pong
-ng
-Ping
+PiPngi
+	Pnongg
+
+		PoPPionngn
+gg
+
+P	iPngo
+Pinn	g
+gPon
 	Pong
 Ping
-	Pong
+	Pgon
+g
 Ping
-	Pong
+	PPoingn
+g
 Ping
-	Pong
-Ping
-	Pong
+		PPonogn
+g
 Ping
 	Pong
 Ping
@@ -86,4 +86,4 @@ Ping
 Ping
 	Pong
 DONE
-$ qemu-system-riscv64: terminating on signal 15 from pid 494163 (make)
+$ qemu-system-riscv64: terminating on signal 15 from pid 62566 (make)
