@@ -5,6 +5,7 @@
 Los semaforos son una herramienta de sincronización utilizada en sistemas operativos para controlar el acceso concurrente a recursos compartidos por múltiples procesos. La implementación de semáforos en este sistema sigue el modelo clásico de semáforos de valor entero.
 
 ## Funciones Disponibles:
+#### 1)
 
 ```c
 int get_channel_sem(void)
@@ -24,14 +25,14 @@ codigo en C
 ```c
 int sem_id = get_channel_sem();
 ```
-
+#### 2)
 
 ```c
 int sem_open(int sem, int value)
 ```
 
 ### Descripción:
-sem_open inicializa el semáforo identificado por el ID sem con el valor value. Solo se puede inicializar si el semáforo está activado (es decir, si se ha llamado a get_channel_sem() previamente). Se utiliza para establecer un valor inicial válido.
+sem_open inicializa el semáforo identificado por el ID sem con el valor value. Solo se puede inicializar si el semáforo está activado es decir, si se ha llamado a get_channel_sem() previamente. Se utiliza para establecer un valor inicial válido.
 
 ### Parámetros:
 
@@ -40,7 +41,7 @@ value: El valor inicial del semáforo (debe ser mayor o igual a 0).
 
 ### Retorno:
 
-1 sis el semáforo se inicializa correctamente.
+1 si el semáforo se inicializa correctamente.
 0 si ocurre algún error (por ejemplo, ID inválido o valor inicial incorrecto).
 
 Uso:
@@ -49,6 +50,9 @@ codigo en C
 ```c
  int result = sem_open(sem_id, 1);
  ```
+
+
+#### 3)
 
 ```c
 int sem_close(int sem)
@@ -70,6 +74,8 @@ codigo en C
    int result = sem_close(sem_id);
 ```   
 
+#### 4)
+
 ```c
  int sem_up(int sem)
 ```
@@ -90,8 +96,11 @@ código en C
 ```c
 int result = sem_up(sem_id);
 ```
+
+
+#### 5)
 ```c
-int sem_downf(int sem)
+int sem_down(int sem)
 ```
 ### Descripción:
 sem_down decrementa el valor del semáforo identificado por el ID sem. Si el valor del semáforo es 0, el proceso que llama a sem_down entra en espera hasta que el semáforo se incremente por otro proceso. Esto permite la sincronización de procesos.
